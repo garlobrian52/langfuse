@@ -21,8 +21,12 @@ export const onShutdown: NodeJS.SignalsListener = async (signal) => {
   setSigtermReceived();
 
   // Stop accepting new connections
-  server.close();
-  logger.info("Server has been closed.");
+  if (server) {
+    server.close();
+    logger.info("Server has been closed.");
+  } else {
+    logger.info("No HTTP server to close (workers-only mode).");
+  }
 
   // Stop batch project cleaners
   for (const cleaner of batchProjectCleaners) {
