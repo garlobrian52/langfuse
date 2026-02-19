@@ -401,6 +401,9 @@ const EnvSchema = z.object({
     .number()
     .positive()
     .default(2),
+
+  // When enabled, only BullMQ worker processors are started without the Express HTTP server.
+  LANGFUSE_WORKERS_ONLY: z.enum(["true", "false"]).default("false"),
 });
 
 export const env: z.infer<typeof EnvSchema> =
